@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node_modules/.bin/ts-node-dev src/index.ts"
+    "dev": "node_modules/.bin/nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,6 @@
   "devDependencies": {
     "nodemon": "^2.0.6",
     "ts-node": "^9.1.1",
-    "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3"
   }
 }

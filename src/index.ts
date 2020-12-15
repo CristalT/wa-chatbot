@@ -3,13 +3,13 @@ import { Client, ClientSession } from 'whatsapp-web.js'
 import * as qrcode from 'qrcode-terminal'
 import * as path from 'path'
 
-const SESSION_FILE_PATH: string = path.join(__dirname, 'session.json')
+const SESSION_FILE_PATH: string = path.join(__dirname, '../tmp/session.json')
 let sessionCfg: ClientSession
 if (fs.existsSync(SESSION_FILE_PATH)) {
     sessionCfg = require(SESSION_FILE_PATH)
 }
 
-const client: Client = new Client({ session: sessionCfg })
+const client: Client = new Client({ puppeteer: { headless: false }, session: sessionCfg })
 
 client.initialize()
 
@@ -33,11 +33,21 @@ client.on('auth_failure', msg => {
     console.error('Authentication failure', msg)
 })
 
-client.on('message', async msg => {
-    console.log('Message received', msg)
+let response: number = 0
 
-    if (msg.body == '!ping') {
-        // Send a new message to the same chat
-        client.sendMessage(msg.from, 'pong')
+client.on('message', async msg => {
+    if (!response) {
+        if (msg.body == '!ping') {
+            // Send a new message to the same chat
+            client.sendMessage(msg.from, 'pong')
+        } else {
+            client.sendMessage(msg.from, 'Hola, en este momento no me encuentro disponible. En cuanto pueda responderé tu mensaje. Saludos!')
+        }
+    
+        response++
+
+        setTimeout(() => {
+            response = 0
+        }, 1000 * 60 * 5)
     }
 })

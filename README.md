@@ -18,5 +18,5 @@ npm i
 
 **Start dev server**
 ```
-npm run serve
+npm run dev
 ```
