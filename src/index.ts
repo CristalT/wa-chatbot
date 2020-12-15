@@ -1,8 +1,9 @@
 import * as fs from 'fs'
 import { Client, ClientSession } from 'whatsapp-web.js'
 import * as qrcode from 'qrcode-terminal'
+import * as path from 'path'
 
-const SESSION_FILE_PATH: string = './session.json'
+const SESSION_FILE_PATH: string = path.join(__dirname, 'session.json')
 let sessionCfg: ClientSession
 if (fs.existsSync(SESSION_FILE_PATH)) {
     sessionCfg = require(SESSION_FILE_PATH)
